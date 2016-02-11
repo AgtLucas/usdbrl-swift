@@ -37,7 +37,7 @@ class ViewController: UIViewController {
                 let theValue = json["USD_BRL"].stringValue
                 print(theValue)
             case .Failure(let error):
-                print("Request failed with error: \(error)")
+                print("Error: \(error)")
             }
         }
         
