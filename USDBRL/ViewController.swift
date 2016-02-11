@@ -12,6 +12,7 @@ import Alamofire
 class ViewController: UIViewController {
     
     let apiURL = "http://free.currencyconverterapi.com/api/v3/convert?q=USD_BRL&compact=ultra"
+    var apiResponse: String!
 
     @IBOutlet weak var inputValue: UITextField!
     @IBOutlet weak var theResult: UILabel!
@@ -30,7 +31,7 @@ class ViewController: UIViewController {
     func apiCall() {
         Alamofire.request(.GET, apiURL)
             .responseJSON { response in
-                print(response.data)
+                print(response.result)
                 
                 if let JSON = response.result.value {
                     print("JSON: \(JSON)")
