@@ -10,6 +10,8 @@ import UIKit
 import Alamofire
 
 class ViewController: UIViewController {
+    
+    let apiURL = "http://free.currencyconverterapi.com/api/v3/convert?q=USD_BRL&compact=ultra"
 
     @IBOutlet weak var inputValue: UITextField!
     @IBOutlet weak var theResult: UILabel!
@@ -17,11 +19,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        apiCall()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func apiCall() {
+        Alamofire.request(.GET, apiURL)
+            .responseJSON { response in
+                print(response.data)
+                
+                if let JSON = response.result.value {
+                    print("JSON: \(JSON)")
+                }
+                
+        }
+        
     }
 
     @IBAction func converter(sender: UIButton) {
