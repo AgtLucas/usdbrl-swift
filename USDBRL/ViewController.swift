@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController {
     
@@ -29,14 +30,15 @@ class ViewController: UIViewController {
     }
     
     func apiCall() {
-        Alamofire.request(.GET, apiURL)
-            .responseJSON { response in
-                print(response.result)
-                
-                if let JSON = response.result.value {
-                    self.apiResponse = JSON
-                    print(self.apiResponse)
-                }
+        Alamofire.request(.GET, apiURL).responseJSON { response in
+            switch response.result {
+            case .Success(let data):
+                let json = JSON(data)
+                let theValue = json["USD_BRL"].stringValue
+                print(theValue)
+            case .Failure(let error):
+                print("Request failed with error: \(error)")
+            }
         }
         
     }
