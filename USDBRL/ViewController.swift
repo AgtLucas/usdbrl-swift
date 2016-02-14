@@ -13,7 +13,7 @@ import SwiftyJSON
 class ViewController: UIViewController {
     
     let apiURL = "http://free.currencyconverterapi.com/api/v3/convert?q=USD_BRL&compact=ultra"
-    var apiResponse: AnyObject?
+    var apiResponse: String?
 
     @IBOutlet weak var inputValue: UITextField!
     @IBOutlet weak var theResult: UILabel!
@@ -29,17 +29,19 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func apiCall() {
+    func apiCall() -> String {
+        var theValue: String?
         Alamofire.request(.GET, apiURL).responseJSON { response in
             switch response.result {
             case .Success(let data):
                 let json = JSON(data)
-                let theValue = json["USD_BRL"].stringValue
-                print(theValue)
+                theValue = json["USD_BRL"].stringValue
             case .Failure(let error):
                 print("Error: \(error)")
             }
         }
+        
+        return theValue!
         
     }
 
